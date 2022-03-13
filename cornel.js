@@ -5,7 +5,7 @@ export let length = 5;         // Size of wall
 
 // Global API variable
 export let API = {
-    backwallColor: 0xFFFFFF,
+    backwallColor: 0x0000FF,
 
     lighting_type: 'Point',
     lightIntensity: 0.7,
@@ -48,7 +48,7 @@ export let phong_API = {
 
 export let physical_API = {
     roughness: 1.0,
-    metalness: 0.0,
+    metalness: 0.8,
     clearCoat: 0.0,
     clearCoatRoughness: 0.0,
     flatShading: false,

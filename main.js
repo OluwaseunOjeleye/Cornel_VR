@@ -3,6 +3,9 @@ import {create_Cornel, length, API} from './cornel.js';
 import {create_GUI} from './gui.js';
 import { RectAreaLightUniformsLib } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { VRButton } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/webxr/VRButton.js';
+import { InteractiveGroup } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/interactive/InteractiveGroup.js';
+import { XRControllerModelFactory } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/webxr/XRControllerModelFactory.js';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js';
 
 let scene, camera, renderer, controls, cornel_Box;
 
@@ -22,19 +25,23 @@ function init(){
   const nearPlane   = 0.1;
   const farPlane    = 1000;
   camera = new THREE.PerspectiveCamera(angleOfView, aspectRatio, nearPlane, farPlane);
-  //camera.position.set(0, 0, 10);
+  camera.position.set(0, 0, 10);
 
-  const cameraHolder = new THREE.Group();
-  cameraHolder.add(camera);
+  // For VR
+	const group = new InteractiveGroup( renderer, camera );
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
-  scene.add(cameraHolder);
-  cameraHolder.position.set(0, 0, 10);
+
+  scene.add( group );
+
+  controls = new OrbitControls( camera, renderer.domElement );
+	controls.minDistance = 1;
+	controls.maxDistance = 50;
 
   // Adding Axes helper
   const axesHelper = new THREE.AxesHelper(5);
-  scene.add(axesHelper);
+  //scene.add(axesHelper);
 
   // Creating Cornel Box
   RectAreaLightUniformsLib.init();
